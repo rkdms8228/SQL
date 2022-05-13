@@ -412,9 +412,11 @@ select sysdate
           , to_char (sysdate, 'YYYY')
           , to_char (sysdate, 'YY')
           , to_char (sysdate, 'MM')
+          , to_char (sysdate, 'MON')
           , to_char (sysdate, 'MONTH')
           , to_char (sysdate, 'DD')
           , to_char (sysdate, 'DAY')
+          , to_char (sysdate, 'DDTH')
           , to_char (sysdate, 'HH24')
           , to_char (sysdate, 'HH')
           , to_char (sysdate, 'MI')
@@ -423,7 +425,19 @@ from dual;
 
 -----------------------------------------------------------------
 
+/* 일반 함수 */
+/* NVL (컬럼명, null일 때 값) | NVL2(컬럼명, null이 아닐 때 값, null일 때 값) */
+select first_name
+          , commission_pct
+          , nvl (commission_pct, 0)
+          , nvl2 (commission_pct, 100, 0)
+from employees;
+
+-----------------------------------------------------------------
+
 --TEST--
 select next_day ('2022/05/12','금요일') 
 from dual;
+
+
 

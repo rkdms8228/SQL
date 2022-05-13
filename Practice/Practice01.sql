@@ -52,7 +52,7 @@ order by max_salary desc;
 --단, 커미션 퍼센트 가 null 이면 0 으로 나타내시오.
 select first_name
          , salary
-         , commission_pct
+          , nvl (commission_pct, 0)
 from employees
 where salary between 10000 and 13999
 order by salary desc;

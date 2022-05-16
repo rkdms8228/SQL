@@ -184,98 +184,98 @@ and em.salary >= 7000; --null 값이 출력되지 않음으로 출력되게 옵�
 /* JOIN */
 /* left join */
 --equi join 테이터 106개 --> null은 포함되지 않음
-select  e.first_name,
-        e.department_id,
-        d.department_name,
-        d.department_id
-from employees e, departments d
-where e.department_id = d.department_id;
+select em.first_name
+          , em.department_id
+          , de.department_name
+          , de.department_id
+from employees em, departments de
+where em.department_id = de.department_id;
 
 --예제
-select  e.first_name,
-        e.department_id,
-        d.department_name,
-        d.department_id
-from employees e left outer join departments d
-on e.department_id = d.department_id;
+select em.first_name
+          , em.department_id
+          , de.department_name
+          , de.department_id
+from employees em left outer join departments de
+on em.department_id = de.department_id;
 
 --left join 오라클 표현법
-select  e.first_name,
-        e.department_id,
-        d.department_name,
-        d.department_id
-from employees e, departments d
-where e.department_id = d.department_id(+); --(+)은 null 포함
+select em.first_name
+          , em.department_id
+          , de.department_name
+          , de.department_id
+from employees em, departments de
+where em.department_id = de.department_id(+); --(+)은 null 포함
 
 -----------------------------------------------------------------
 
 /* JOIN */
 /* right join */ 
 --equi join 테이터 106개 --> null은 포함되지 않는다
-select  e.first_name,
-        e.department_id,
-        d.department_name,
-        d.department_id
-from employees e, departments d
-where e.department_id = d.department_id;
+select em.first_name
+          , em.department_id
+          , de.department_name
+          , de.department_id
+from employees em, departments de
+where em.department_id = de.department_id;
 
 --예제
-select  e.first_name,
-        e.department_id,
-        d.department_name,
-        d.department_id
-from employees e right outer join departments d
-on e.department_id = d.department_id;
+select em.first_name
+          , em.department_id
+          , de.department_name
+          , de.department_id
+from employees em right outer join departments de
+on em.department_id = de.department_id;
 
 --right join 오라클 표현법
-select  e.first_name,
-        e.department_id,
-        d.department_name,
-        d.department_id
-from employees e, departments d
-where e.department_id(+) = d.department_id;
+select em.first_name
+          , em.department_id
+          , de.department_name
+          , de.department_id
+from employees em, departments de
+where em.department_id(+) = de.department_id;
 
 --right join --> left join
-select  e.first_name,
-        e.department_id,
-        d.department_name,
-        d.department_id
-from employees e right outer join departments d
-on e.department_id = d.department_id;
+select em.first_name
+          , em.department_id
+          , de.department_name
+          , de.department_id
+from employees em right outer join departments de
+on em.department_id = de.department_id;
 
-select  e.first_name,
-        e.department_id,
-        d.department_name,
-        d.department_id
-from departments d left outer join employees e
-on e.department_id = d.department_id;
+select em.first_name
+          , em.department_id
+          , de.department_name
+          , de.department_id
+from departments de left outer join employees em
+on em.department_id = de.department_id;
 
 -----------------------------------------------------------------
 
 /* JOIN */
 /* full outer join */
 
-select  e.first_name,
-        e.department_id,
-        d.department_name,
-        d.department_id
-from employees e full outer join departments d
-on e.department_id = d.department_id;
+select em.first_name
+          , em.department_id
+          , de.department_name
+          , de.department_id
+from employees em full outer join departments de
+on em.department_id = de.department_id;
 
 -----------------------------------------------------------------
 
 /* JOIN */
 /* Self Join */
-select  e.employee_id,
-        e.first_name,
-        e.salary,
-        e.phone_number,
-        e.manager_id,
-        m.employee_id,
-        m.first_name ManagerName,
-        m.phone_number
-from employees e, employees m
-where e.manager_id = m.employee_id;
+select emp.employee_id
+         , emp.first_name
+         , emp.salary
+         , emp.phone_number
+         , emp.manager_id
+         , man.employee_id
+         , man.first_name ManagerName
+         , man.phone_number
+from employees emp, employees man
+where emp.manager_id = man.employee_id;
 
 -----------------------------------------------------------------
 

@@ -139,7 +139,7 @@ from (select rownum rn
                               , salary
                               , hire_date
                     from employees
-                    order by hire_date desc)
+                    order by hire_date asc)
           )
 where rn >=11
 and rn <= 15;

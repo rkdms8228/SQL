@@ -11,7 +11,7 @@ where salary > (select salary
                         where first_name = 'Den'); --SubQuery
 
 
---단일행 연산자 : = , > , >=, < , <=, <>(같지 않다)--
+--[단일행 연산자 : = , > , >=, < , <=, <>(같지 않다)]--
 
 
 --급여를 가장 적게 받는 사람의 이름, 급여, 사원 번호는?
@@ -45,11 +45,11 @@ where salary in (select salary
                           where department_id = 110);
 
 
---다중행 연산자: IN(=), ANY(or), ALL(and)--
+--[다중행 연산자: IN(=), ANY(or), ALL(and)]--
 
 
 --IN
---각 부서별로 최고급여를 받는 사원을 출력하세요.
+--각 부서별로 최고 급여를 받는 사원을 출력하세요.
 select department_id
           , employee_id
           , first_name || ' ' || last_name "FULL NAME"
@@ -73,8 +73,9 @@ from employees
 where salary >any (select salary
                               from employees
                               where department_id = '110');
---부서 번호 110번인 직원이 두 명이므로 표본이 두개이다.
---해서 ANY는 급여 12008, 8300 두 값 중 하나라도 넘는다면 결과값에 나온다.
+                              
+-->부서 번호 110번인 직원이 두 명이므로 표본이 두개이다.
+-->해서 ANY는 급여 12008, 8300 두 값 중 하나라도 넘는다면 결과값에 나온다.
 
 -----------------------------------------------------------------
 
@@ -89,8 +90,41 @@ where salary >all (select salary
                             from employees
                             where department_id = '110');
 
---부서 번호 110번인 직원이 두 명이므로 표본이 두개이다.
---ALL은 급여 12008, 8300 두 값 모두 넘어야만 결과값에 나온다.
+-->부서 번호 110번인 직원이 두 명이므로 표본이 두개이다.
+-->ALL은 급여 12008, 8300 두 값 모두 넘어야만 결과값에 나온다.
+
+-----------------------------------------------------------------
+
+/* SubQuery */ 
+/* 다중행 */
+--조건절에서 비교 vs 테이블에서 조인
+
+--각 부서별로 최고 급여를 받는 사원을 출력하세요.
+--조건절에서 비교
+select department_id
+          , employee_id
+          , first_name
+          , salary
+from employees
+where (department_id, salary) in (select department_id
+                                                               , max (salary)
+                                                     from employees
+                                                     group by department_id)
+order by department_id asc;
+
+--각 부서별로 최고 급여를 받는 사원을 출력하세요.
+--테이블에서 조인
+select e.department_id
+          , e.employee_id
+          , e.first_name
+          , e.salary
+from employees e, (select department_id
+                                         , max (salary) salary
+                               from employees
+                               group by department_id) s
+where e.department_id = s.department_id
+and e.salary = s.salary
+order by department_id asc;
 
 -----------------------------------------------------------------
 

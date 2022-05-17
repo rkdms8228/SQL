@@ -16,12 +16,14 @@ where salary < (select avg (salary)
 --직원 번호(employee_id), 이름(first_name), 급여(salary), 평균 급여, 최대 급여를 급여의 오름차순으로 정렬하여 출력하세요. (51건)
 select employee_id
           , first_name
-          , salary
-from employees
-where salary >= (select avg (salary)
-                          from employees)
-and salary <= (select max (salary)
-                       from employees)
+          , e.salary
+          , s.avgsalary
+          , s.maxsalary
+from employees e, (select avg (salary) avgsalary
+                                         , max (salary) maxsalary
+                                from employees) s
+where e.salary >= s.avgSalary
+and e.salary <= s.maxSalary
 order by salary asc;
 
 -----------------------------------------------------------------------------------------------------------------------------------

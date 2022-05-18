@@ -95,7 +95,6 @@ where salary >all (select salary
 
 -----------------------------------------------------------------
 
-/* SubQuery */ 
 /* 다중행 */
 --조건절에서 비교 vs 테이블에서 조인
 
@@ -125,6 +124,62 @@ from employees e, (select department_id
 where e.department_id = s.department_id
 and e.salary = s.salary
 order by department_id asc;
+
+-----------------------------------------------------------------
+
+
+--=========================--
+
+/* rownum */ 
+
+--급여를 가장 많이 받는 5명의 직원의 이름을 출력하시오.
+select rn
+          , first_name
+          , salary
+from (select rownum rn
+                    , first_name
+                    , salary
+          from (select first_name
+                              , salary
+                    from employees
+                    order by salary desc)
+          )
+where rn >=1
+and rn <= 5;
+
+--오류 예시
+select rownum --순위를 매기는 곳
+          , first_name
+          , salary
+from (select first_name
+                    , salary
+          from employees
+          order by salary desc)
+where rn >=2 --조건을 검사하는 곳
+and rn <= 5;
+
+-->동시에 순위와 조건을 순서대로 작업을 하니 다음의 결과값이 계속 1번째로 매겨져서 값이 출력되지 않음
+
+-----------------------------------------------------------------
+
+--07년에 입사한 직원 중 급여가 많은 직원 3등에서 7등의 이름, 급여, 입사일은?
+select rn
+          , first_name
+          , salary
+          , hire_date
+from (select rownum rn
+                   , first_name
+                   , salary
+                   , hire_date
+           from (select first_name
+                               , salary
+                               , hire_date
+                      from employees
+                      where to_char (hire_date, 'YYYY') = '2007'
+                      order by salary desc)
+          )
+where rn >=3
+and rn <= 7;
 
 -----------------------------------------------------------------
 

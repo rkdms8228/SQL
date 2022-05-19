@@ -63,9 +63,9 @@ order by m.avgsalary desc;
 --간단한 셀프 조인 방법
 select  man.employee_id
            , man.first_name
-           , round (avg (emp.salary), 0) 
-           , min (emp.salary)
-           , max (emp.salary)
+           , round (avg (emp.salary), 0) avgsalary
+           , min (emp.salary) minsalary
+           , max (emp.salary) maxsalary
 from employees emp, employees man
 where emp.manager_id = man.employee_id
 and emp.hire_date >= '2005/01/01'

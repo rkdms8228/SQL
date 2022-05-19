@@ -100,3 +100,26 @@ from dual;
 --다음의 시퀀스(번호) 조회
 select seq_author_id.nextval
 from dual;
+
+--시퀀스 삭제
+DROP SEQUENCE seq_author_id;
+
+--마지막 commit했던 시점으로 돌려줌
+--하지만 테이블 관리만 해당(테이블, 시퀀스를 삭제한 것은 해당 안 됨)
+rollback;
+
+/** 데이터 저장 **/
+commit;
+
+--테이블 관리(DML) - UPDATE
+update author
+set author_desc = '서울특별시'
+where author_id = 5;
+
+update book
+set author_desc = '서울특별시'
+where author_id = 5;
+
+--author 테이블에서 기안84 데이터를 삭제
+delete from author
+where author_id = 4;

@@ -60,6 +60,19 @@ where e.employee_id = m.manager_id
 and m.avgsalary >= 5000
 order by m.avgsalary desc;
 
+--간단한 셀프 조인 방법
+select  man.employee_id
+           , man.first_name
+           , round (avg (emp.salary), 0) 
+           , min (emp.salary)
+           , max (emp.salary)
+from employees emp, employees man
+where emp.manager_id = man.employee_id
+and emp.hire_date >= '2005/01/01'
+group by man.employee_id, man.first_name
+having round (avg (emp.salary), 0) >= 5000
+order by round (avg (emp.salary), 0) desc;
+
 -----------------------------------------------------------------------------------------------------------------------------------
 
 /* 문제 4 */
